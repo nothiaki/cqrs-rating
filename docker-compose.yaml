@@ -10,6 +10,27 @@ services:
       - ./rating-command-service:/rating-command-service
     networks:
       - dev
+    depends_on:
+      - postgres-rating-command-service:
+
+  postgres-rating-command-service:
+    image: postgres
+    container_name: postgres-rating-command-service
+    ports:
+      - 5432:5432
+    restart: no
+    environment:
+      POSTGRES_USER: postgres-rating-command-service
+      POSTGRES_PASSWORD: postgres-rating-command-service
+      POSTGRES_DB: rating
+    volumes:
+      - postgres_data_rating_command_service:/var/lib/postgresql/data
+    networks:
+      - dev
+
+volumes:
+
+  postgres_data_rating_command_service:
 
 networks:
 
