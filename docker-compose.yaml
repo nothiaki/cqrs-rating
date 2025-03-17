@@ -11,26 +11,26 @@ services:
     networks:
       - dev
     depends_on:
-      - postgres-rating-command-service:
+      - postgres-cqrs-rating:
 
-  postgres-rating-command-service:
+  postgres-cqrs-rating:
     image: postgres
-    container_name: postgres-rating-command-service
+    container_name: postgres-cqrs-rating
     ports:
       - 5432:5432
     restart: no
     environment:
-      POSTGRES_USER: postgres-rating-command-service
-      POSTGRES_PASSWORD: postgres-rating-command-service
-      POSTGRES_DB: rating
+      POSTGRES_USER: postgres-cqrs-rating
+      POSTGRES_PASSWORD: postgres-cqrs-rating
+      POSTGRES_DB: rating-command-service
     volumes:
-      - postgres_data_rating_command_service:/var/lib/postgresql/data
+      - postgres_data_cqrs_rating:/var/lib/postgresql/data
     networks:
       - dev
 
 volumes:
 
-  postgres_data_rating_command_service:
+  postgres_data_cqrs_rating:
 
 networks:
 
