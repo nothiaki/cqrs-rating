@@ -1,8 +1,5 @@
 package cqrs.rating_command_service.infrastructure.persistence;
 
-import java.util.Optional;
-import java.util.UUID;
-
 import org.springframework.stereotype.Repository;
 
 import cqrs.rating_command_service.core.domain.Rating;
@@ -13,16 +10,16 @@ import cqrs.rating_command_service.infrastructure.persistence.jpa.RatingJpaRepos
 @Repository
 public class RatingRepositoryImpl implements RatingRepository {
 
-  private final RatingJpaRepository jpaRepository;
+  private final RatingJpaRepository sourceJpaRepository;
 
-  public RatingRepositoryImpl(RatingJpaRepository jpaRepository) {
-    this.jpaRepository = jpaRepository;
+  public RatingRepositoryImpl(RatingJpaRepository sourceJpaRepository) {
+    this.sourceJpaRepository = sourceJpaRepository;
   }
 
   @Override
   public Rating save(Rating rating) {
     RatingEntity ratingEntity = RatingEntity.fromDomainToEntity(rating);
-    RatingEntity savedEntity = jpaRepository.save(ratingEntity);
+    RatingEntity savedEntity = sourceJpaRepository.save(ratingEntity);
 
     return savedEntity.fromEntityToDomain();
   }
