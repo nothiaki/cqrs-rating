@@ -11,7 +11,7 @@ services:
     networks:
       - dev
     depends_on:
-      - postgres-cqrs-rating:
+      - postgres-cqrs-rating
 
   postgres-cqrs-rating:
     image: postgres
