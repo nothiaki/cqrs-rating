@@ -4,24 +4,25 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 import cqrs.rating_command_service.core.domain.EventType;
-import cqrs.rating_command_service.core.domain.Rating;
 import cqrs.rating_command_service.core.domain.Source;
-import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
-@Table(name = "source")
 @Entity
+@Table(name = "source")
 public class SourceEntity {
 
   @Id
   @GeneratedValue
   private UUID id;
 
-  @Embedded
-  private Rating rating;
+  @OneToOne
+  @JoinColumn(name = "ratingId", referencedColumnName = "id")
+  private RatingEntity ratingEntity;
 
   private EventType eventType;
   private LocalDateTime created;
@@ -30,12 +31,12 @@ public class SourceEntity {
 
   public SourceEntity(
     UUID id,
-    Rating rating,
+    RatingEntity ratingEntity,
     EventType eventType,
     LocalDateTime created
   ) {
     this.id = id;
-    this.rating = rating;
+    this.ratingEntity = ratingEntity;
     this.eventType = eventType;
     this.created = created;
   }
@@ -43,7 +44,7 @@ public class SourceEntity {
   public static SourceEntity fromDomainToEntity(Source source) {
     return new SourceEntity(
       source.getId(),
-      source.getRating(),
+      new RatingEntity().fromDomainToEntity(source.getRating()),
       source.getEventType(),
       source.getCreated()
     );
@@ -52,7 +53,7 @@ public class SourceEntity {
   public Source fromEntityToDomain() {
     return new Source(
       id,
-      rating,
+      ratingEntity.fromEntityToDomain(),
       eventType,
       created
     );

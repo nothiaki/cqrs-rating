@@ -1,9 +1,12 @@
 package cqrs.rating_command_service.application.shared;
 
+import org.springframework.stereotype.Service;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import cqrs.rating_command_service.core.shared.StringHandler;
 
+@Service
 public class JsonStringHandler<T> implements StringHandler<T> {
 
   private final ObjectMapper objectMapper;

@@ -1,5 +1,7 @@
 package cqrs.rating_command_service.application.usecase;
 
+import org.springframework.stereotype.Service;
+
 import cqrs.rating_command_service.core.domain.Rating;
 import cqrs.rating_command_service.core.repository.RatingRepository;
 import cqrs.rating_command_service.core.shared.StringHandler;
@@ -7,6 +9,7 @@ import cqrs.rating_command_service.core.usecase.RatingUseCase;
 import cqrs.rating_command_service.core.usecase.SourceUseCase;
 import cqrs.rating_command_service.core.usecase.messaging.ProducerUseCase;
 
+@Service
 public class RatingUseCaseImpl implements RatingUseCase{
 
   private final ProducerUseCase producerUseCase;

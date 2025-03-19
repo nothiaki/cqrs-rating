@@ -18,7 +18,7 @@ public class RatingRepositoryImpl implements RatingRepository {
 
   @Override
   public Rating save(Rating rating) {
-    RatingEntity ratingEntity = RatingEntity.fromDomainToEntity(rating);
+    RatingEntity ratingEntity = new RatingEntity().fromDomainToEntity(rating);
     RatingEntity savedEntity = sourceJpaRepository.save(ratingEntity);
 
     return savedEntity.fromEntityToDomain();

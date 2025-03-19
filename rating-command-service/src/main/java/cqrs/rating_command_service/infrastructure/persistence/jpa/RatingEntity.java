@@ -4,13 +4,15 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 import cqrs.rating_command_service.core.domain.Rating;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
-@Table(name = "rating")
 @Entity
+@Table(name = "rating")
 public class RatingEntity {
 
   @Id
@@ -22,6 +24,9 @@ public class RatingEntity {
   private Integer rate;
   private String feedback;
   private LocalDateTime created;
+
+  @OneToOne(mappedBy = "ratingEntity", cascade = CascadeType.ALL)
+  private SourceEntity sourceEntity;
 
   public RatingEntity() {}
 
@@ -41,7 +46,7 @@ public class RatingEntity {
     this.created = created;
   }
 
-  public static RatingEntity fromDomainToEntity(Rating rating) {
+  public RatingEntity fromDomainToEntity(Rating rating) {
     return new RatingEntity(
       rating.getId(),
       rating.getOwnerId(),
