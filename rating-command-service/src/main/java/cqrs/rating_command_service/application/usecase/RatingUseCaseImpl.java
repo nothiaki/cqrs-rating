@@ -34,7 +34,7 @@ public class RatingUseCaseImpl implements RatingUseCase{
 
     String stringfiedRating = stringHandler.serialize(rating);
 
-    producerUseCase.send("", stringfiedRating);
+    producerUseCase.send("rating-command-service.rating.create", stringfiedRating);
   }
 
 }
