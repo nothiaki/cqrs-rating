@@ -11,26 +11,46 @@ services:
     networks:
       - dev
     depends_on:
-      - postgres-cqrs-rating
+      - postgres
+      - kafka
 
-  postgres-cqrs-rating:
+  postgres:
     image: postgres
-    container_name: postgres-cqrs-rating
+    container_name: postgres
     ports:
       - 5432:5432
     restart: no
     environment:
-      POSTGRES_USER: postgres-cqrs-rating
-      POSTGRES_PASSWORD: postgres-cqrs-rating
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
       POSTGRES_DB: rating-command-service
     volumes:
-      - postgres_data_cqrs_rating:/var/lib/postgresql/data
+      - postgres:/var/lib/postgresql/data
     networks:
       - dev
 
+  kafka:
+    image: apache/kafka:latest
+    container_name: kafka
+    environment:
+      KAFKA_NODE_ID: 1
+      KAFKA_PROCESS_ROLES: broker,controller
+      KAFKA_LISTENERS: PLAINTEXT://localhost:9092,CONTROLLER://localhost:9093
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9092
+      KAFKA_CONTROLLER_LISTENER_NAMES: CONTROLLER
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: CONTROLLER:PLAINTEXT,PLAINTEXT:PLAINTEXT
+      KAFKA_CONTROLLER_QUORUM_VOTERS: 1@localhost:9093
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
+      KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
+      KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0
+      KAFKA_NUM_PARTITIONS: 3
+    networks:
+        - dev
+
 volumes:
 
-  postgres_data_cqrs_rating:
+  postgres:
 
 networks:
 
