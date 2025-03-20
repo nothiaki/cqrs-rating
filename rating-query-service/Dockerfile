@@ -1,4 +1,4 @@
-ROM openjdk:17-alpine
+FROM eclipse-temurin:17-jdk-focal
  
 WORKDIR /rating-query-service
  
@@ -9,6 +9,5 @@ COPY mvnw pom.xml ./
 RUN ./mvnw dependency:go-offline
  
 COPY src ./src
- 
-CMD ["./mvnw", "spring-boot:run"]
 
+CMD ["./mvnw", "spring-boot:run"]

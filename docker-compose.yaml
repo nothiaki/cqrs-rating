@@ -14,6 +14,19 @@ services:
       - postgres
       - kafka
 
+  rating-query-service:
+    build: ./rating-query-service
+    container_name: rating-query-service
+    ports:
+      - 8081:8081
+    restart: no
+    volumes:
+      - ./rating-query-service:/rating-query-service
+    networks:
+      - dev
+    depends_on:
+      - kafka
+
   postgres:
     image: postgres
     container_name: postgres
