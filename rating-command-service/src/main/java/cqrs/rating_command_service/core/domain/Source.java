@@ -6,7 +6,7 @@ import java.util.UUID;
 public class Source {
 
   private UUID id;
-  private Rating rating;
+  private String rating;
   private EventType eventType;
   private LocalDateTime created;
 
@@ -14,7 +14,7 @@ public class Source {
 
   public Source(
     UUID id,
-    Rating rating,
+    String rating,
     EventType eventType,
     LocalDateTime created
   ) {
@@ -32,11 +32,11 @@ public class Source {
     this.id = id;
   }
 
-  public Rating getRating() {
+  public String getRating() {
     return this.rating;
   }
 
-  public void setRating(Rating rating) {
+  public void setRating(String rating) {
     this.rating = rating;
   }
 

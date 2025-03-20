@@ -4,11 +4,9 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 import cqrs.rating_command_service.core.domain.Rating;
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -24,9 +22,6 @@ public class RatingEntity {
   private Integer rate;
   private String feedback;
   private LocalDateTime created;
-
-  @OneToOne(mappedBy = "ratingEntity", cascade = CascadeType.ALL)
-  private SourceEntity sourceEntity;
 
   public RatingEntity() {}
 

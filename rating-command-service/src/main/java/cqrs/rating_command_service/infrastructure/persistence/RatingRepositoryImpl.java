@@ -10,16 +10,16 @@ import cqrs.rating_command_service.infrastructure.persistence.jpa.RatingJpaRepos
 @Repository
 public class RatingRepositoryImpl implements RatingRepository {
 
-  private final RatingJpaRepository sourceJpaRepository;
+  private final RatingJpaRepository ratingJpaRepository;
 
-  public RatingRepositoryImpl(RatingJpaRepository sourceJpaRepository) {
-    this.sourceJpaRepository = sourceJpaRepository;
+  public RatingRepositoryImpl(RatingJpaRepository ratingJpaRepository) {
+    this.ratingJpaRepository = ratingJpaRepository;
   }
 
   @Override
   public Rating save(Rating rating) {
     RatingEntity ratingEntity = new RatingEntity().fromDomainToEntity(rating);
-    RatingEntity savedEntity = sourceJpaRepository.save(ratingEntity);
+    RatingEntity savedEntity = ratingJpaRepository.save(ratingEntity);
 
     return savedEntity.fromEntityToDomain();
   }

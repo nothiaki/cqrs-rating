@@ -1,5 +1,7 @@
 package cqrs.rating_command_service.application.usecase;
 
+import java.time.LocalDateTime;
+
 import org.springframework.stereotype.Service;
 
 import cqrs.rating_command_service.core.domain.Rating;
@@ -31,6 +33,8 @@ public class RatingUseCaseImpl implements RatingUseCase{
 
   @Override
   public void create(Rating rating) {
+    rating.setCreated(LocalDateTime.now());
+
     ratingRepository.save(rating);
 
     sourceUseCase.createRating(rating);

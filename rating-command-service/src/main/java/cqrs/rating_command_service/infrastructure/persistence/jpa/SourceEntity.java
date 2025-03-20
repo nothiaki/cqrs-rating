@@ -8,8 +8,6 @@ import cqrs.rating_command_service.core.domain.Source;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -20,10 +18,7 @@ public class SourceEntity {
   @GeneratedValue
   private UUID id;
 
-  @OneToOne
-  @JoinColumn(name = "ratingId", referencedColumnName = "id")
-  private RatingEntity ratingEntity;
-
+  private String rating;
   private EventType eventType;
   private LocalDateTime created;
 
@@ -31,12 +26,12 @@ public class SourceEntity {
 
   public SourceEntity(
     UUID id,
-    RatingEntity ratingEntity,
+    String rating,
     EventType eventType,
     LocalDateTime created
   ) {
     this.id = id;
-    this.ratingEntity = ratingEntity;
+    this.rating = rating;
     this.eventType = eventType;
     this.created = created;
   }
@@ -44,7 +39,7 @@ public class SourceEntity {
   public static SourceEntity fromDomainToEntity(Source source) {
     return new SourceEntity(
       source.getId(),
-      new RatingEntity().fromDomainToEntity(source.getRating()),
+      source.getRating(),
       source.getEventType(),
       source.getCreated()
     );
@@ -53,7 +48,7 @@ public class SourceEntity {
   public Source fromEntityToDomain() {
     return new Source(
       id,
-      ratingEntity.fromEntityToDomain(),
+      rating,
       eventType,
       created
     );
