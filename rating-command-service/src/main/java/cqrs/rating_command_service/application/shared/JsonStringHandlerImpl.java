@@ -7,11 +7,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import cqrs.rating_command_service.core.shared.StringHandler;
 
 @Service
-public class JsonStringHandler<T> implements StringHandler<T> {
+public class JsonStringHandlerImpl<T> implements StringHandler<T> {
 
   private final ObjectMapper objectMapper;
 
-  public JsonStringHandler(ObjectMapper objectMapper) {
+  public JsonStringHandlerImpl(ObjectMapper objectMapper) {
     this.objectMapper = objectMapper;
   }
   
