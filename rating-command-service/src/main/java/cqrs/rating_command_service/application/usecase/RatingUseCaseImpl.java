@@ -35,11 +35,11 @@ public class RatingUseCaseImpl implements RatingUseCase{
   public void create(Rating rating) {
     rating.setCreated(LocalDateTime.now());
 
-    ratingRepository.save(rating);
+    Rating ratingSaved = ratingRepository.save(rating);
 
-    sourceUseCase.createRating(rating);
+    sourceUseCase.createRating(ratingSaved);
 
-    String stringfiedRating = stringHandler.serialize(rating);
+    String stringfiedRating = stringHandler.serialize(ratingSaved);
 
     producerUseCase.send("rating-command-service.rating.create", stringfiedRating);
   }
