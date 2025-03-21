@@ -1,4 +1,4 @@
-package cqrs.rating_query_service;
+package cqrs.rating_query_service.application;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
