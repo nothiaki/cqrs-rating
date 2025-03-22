@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import cqrs.rating_query_service.core.domain.Rating;
 import cqrs.rating_query_service.core.shared.StringHandler;
 import cqrs.rating_query_service.core.usecase.messaging.ConsumerUseCase;
+import cqrs.rating_query_service.core.usecase.messaging.MessagingTopics;
 
 @Service
 public class ConsumerUseCaseImpl implements ConsumerUseCase {
@@ -17,8 +18,8 @@ public class ConsumerUseCaseImpl implements ConsumerUseCase {
   }
 
   @KafkaListener(
-    topics = "rating-command-service.rating.create",
-    groupId = "rating-query-service-group"
+    topics = MessagingTopics.RATING_CREATE,
+    groupId = MessagingTopics.RATING_QUERY_SERVICE_GROUP
   )
   @Override
   public void ratingCreate(String payload) {
