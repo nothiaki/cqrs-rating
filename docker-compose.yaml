@@ -26,6 +26,7 @@ services:
       - dev
     depends_on:
       - kafka
+      - elasticsearch
 
   postgres:
     image: postgres
@@ -70,8 +71,7 @@ services:
       - 9200:9200
     environment:
       discovery.type: single-node
-      xpack.security.enabled: true
-      ELASTIC_PASSWORD: elasticsearch
+      xpack.security.enabled: false
       ES_JAVA_OPTS: -Xms512m -Xmx512m
 
 volumes:
