@@ -9,6 +9,7 @@ import cqrs.rating_command_service.core.repository.RatingRepository;
 import cqrs.rating_command_service.core.shared.StringHandler;
 import cqrs.rating_command_service.core.usecase.RatingUseCase;
 import cqrs.rating_command_service.core.usecase.SourceUseCase;
+import cqrs.rating_command_service.core.usecase.messaging.MessagingTopics;
 import cqrs.rating_command_service.core.usecase.messaging.ProducerUseCase;
 
 @Service
@@ -41,7 +42,7 @@ public class RatingUseCaseImpl implements RatingUseCase{
 
     String stringfiedRating = stringHandler.serialize(ratingSaved);
 
-    producerUseCase.send("rating-command-service.rating.create", stringfiedRating);
+    producerUseCase.send(MessagingTopics.RATING_CREATE, stringfiedRating);
   }
 
 }
