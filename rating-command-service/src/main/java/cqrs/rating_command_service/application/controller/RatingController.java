@@ -23,7 +23,7 @@ public class RatingController {
   @PostMapping
   public ResponseEntity<Void> create(@RequestBody Rating rating) {
     ratingUseCase.create(rating);
-    return ResponseEntity.status(HttpStatus.ACCEPTED).build();
+    return ResponseEntity.status(HttpStatus.CREATED).build();
   }
 
 }

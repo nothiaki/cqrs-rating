@@ -12,7 +12,7 @@ services:
       - dev
     depends_on:
       - postgres
-      - kafka
+      # - kafka
 
   rating-query-service:
     build: ./rating-query-service
