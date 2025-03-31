@@ -1,5 +1,5 @@
 {
-  "name": "postgresql-connector-source",
+  "name": "postgresql-source",
   "config": {
     "connector.class": "io.debezium.connector.postgresql.PostgresConnector",
     "task.max": 1,
@@ -11,9 +11,8 @@
     "schema.history.internal.kafka.bootstrap.servers": "kafka:9092",
     "schema.history.internal.kafka.topic": "history.rating",
     "database.allowPublicKeyRetrieval": "true",
-    "topic.prefix": "postgres",
+    "topic.prefix": "postgres.rating-command-service",
     "plugin.name": "pgoutput",
-    "table.include.list": "public.*",
-    "tombstones.on.delete": "true"
+    "table.include.list": "public.rating"
   }
 }

@@ -4,7 +4,7 @@
     "name": "elasticsearch-sink",
     "connector.class": "io.confluent.connect.elasticsearch.ElasticsearchSinkConnector",
     "connection.url": "http://elasticsearch:9200",
-    "topics": "postgres.rating-command-service.rating",
+    "topics": "postgres.rating-command-service.public.rating",
     "type.name": "_doc",
     "value.converter": "org.apache.kafka.connect.json.JsonConverter",
     "value.converter.schemas.enable": false,
