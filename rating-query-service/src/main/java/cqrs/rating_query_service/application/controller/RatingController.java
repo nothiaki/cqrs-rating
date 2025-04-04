@@ -3,6 +3,7 @@ package cqrs.rating_query_service.application.controller;
 import java.util.List;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -19,6 +20,7 @@ public class RatingController {
     this.ratingUseCase = ratingUseCase;
   }
 
+  @GetMapping
   public ResponseEntity<List<Rating>> findRating() {
     return ResponseEntity.ok(ratingUseCase.findRating());
   }
