@@ -1,8 +1,8 @@
 package cqrs.rating_query_service.infrastructure.persistence;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 import org.springframework.stereotype.Component;
 
@@ -22,13 +22,10 @@ public class RatingRepositoryImpl implements RatingRepository {
 
   @Override
   public List<Rating> findAll() {
-    Iterable<RatingEntity> entitiesIterable = ratingElasticsearchRepository.findAll();
+    Iterable<RatingEntity> entities = ratingElasticsearchRepository.findAll();
 
-    List<RatingEntity> entities = new ArrayList<>();
-
-    entitiesIterable.forEach(entities::add);
-
-    return entities.stream()
+    return StreamSupport
+      .stream(entities.spliterator() ,false)
       .map(entity -> entity.fromEntityToDomain())
       .collect(Collectors.toList());
   }
