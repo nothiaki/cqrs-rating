@@ -1,17 +1,17 @@
-package cqrs.rating_query_service.infrastructure.presistence;
+package cqrs.rating_query_service.infrastructure.persistence;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Component;
 
 import cqrs.rating_query_service.core.domain.Rating;
 import cqrs.rating_query_service.core.repository.RatingRepository;
-import cqrs.rating_query_service.infrastructure.presistence.elasticsearch.RatingElasticsearchRepository;
-import cqrs.rating_query_service.infrastructure.presistence.elasticsearch.RatingEntity;
+import cqrs.rating_query_service.infrastructure.persistence.elasticsearch.RatingElasticsearchRepository;
+import cqrs.rating_query_service.infrastructure.persistence.elasticsearch.RatingEntity;
 
-@Repository
+@Component
 public class RatingRepositoryImpl implements RatingRepository {
 
   private final RatingElasticsearchRepository ratingElasticsearchRepository;

@@ -1,4 +1,4 @@
-package cqrs.rating_query_service.infrastructure.presistence.elasticsearch;
+package cqrs.rating_query_service.infrastructure.persistence.elasticsearch;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
