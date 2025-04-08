@@ -1,6 +1,8 @@
 package cqrs.rating_query_service.infrastructure.persistence;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -28,6 +30,13 @@ public class RatingRepositoryImpl implements RatingRepository {
       .stream(entities.spliterator() ,false)
       .map(entity -> entity.fromEntityToDomain())
       .collect(Collectors.toList());
+  }
+
+  @Override
+  public Optional<Rating> findOneById(UUID id) {
+    Optional<RatingEntity> entity = ratingElasticsearchRepository.findByPayloadAfterId(id.toString());
+
+    return entity.map(et -> et.fromEntityToDomain());
   }
 
 }
