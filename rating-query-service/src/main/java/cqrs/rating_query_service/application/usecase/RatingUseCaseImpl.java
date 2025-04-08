@@ -1,6 +1,7 @@
 package cqrs.rating_query_service.application.usecase;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.stereotype.Service;
 
@@ -18,8 +19,14 @@ public class RatingUseCaseImpl implements RatingUseCase {
   }
 
   @Override
-  public List<Rating> findRating() {
+  public List<Rating> findAllRating() {
     return ratingRepository.findAll();
+  }
+
+  @Override
+  public Rating findOneRating(UUID id) {
+    return ratingRepository.findOneById(id)
+      .orElseThrow(() -> new RuntimeException("Did not found record for id " + id));
   }
 
 }
