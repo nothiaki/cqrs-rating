@@ -6,8 +6,6 @@ services:
     ports:
       - 8080:8080
     restart: no
-    networks:
-      - dev
     volumes:
       - ./api-gateway:/api-gateway
     networks:
