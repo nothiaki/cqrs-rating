@@ -5,8 +5,10 @@ import java.util.concurrent.TimeUnit;
 
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.producer.ProducerRecord;
+import org.apache.kafka.common.header.internals.RecordHeader;
 import org.springframework.kafka.requestreply.ReplyingKafkaTemplate;
 import org.springframework.kafka.requestreply.RequestReplyFuture;
+import org.springframework.kafka.support.KafkaHeaders;
 import org.springframework.stereotype.Service;
 
 import cqrs.api_gateway.core.usecase.messaging.ProducerReplyUseCase;
@@ -23,10 +25,13 @@ public class KafkaProducerReplyUseCaseImpl implements ProducerReplyUseCase {
   }
 
   @Override
-  public String send(String topic, String payload) {
+  public String send(String topic, String payload, String correlationId) {
     String replyTopic = topic + ".reply";
 
     ProducerRecord<String, String> record = new ProducerRecord<>(topic, payload);
+    record.headers().add(new RecordHeader(KafkaHeaders.REPLY_TOPIC, replyTopic.getBytes()));
+    record.headers().add(new RecordHeader(KafkaHeaders.CORRELATION_ID, correlationId.getBytes()));
+
 
     replyingKafkaTemplate.setDefaultReplyTimeout(Duration.ofSeconds(10));
     replyingKafkaTemplate.setDefaultTopic(replyTopic);
@@ -39,7 +44,7 @@ public class KafkaProducerReplyUseCaseImpl implements ProducerReplyUseCase {
 
       return reply.value();
     } catch (Exception e) {
-      throw new RuntimeException("Error while getting rating by id " + e);
+      throw new RuntimeException("Error while getting reply" + e);
     }
   }
 

@@ -1,5 +1,7 @@
 package cqrs.api_gateway.infrastructure.config.kafka;
 
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -17,6 +19,7 @@ import org.springframework.kafka.core.DefaultKafkaProducerFactory;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.core.ProducerFactory;
 import org.springframework.kafka.listener.ConcurrentMessageListenerContainer;
+import org.springframework.kafka.listener.ContainerProperties;
 import org.springframework.kafka.requestreply.ReplyingKafkaTemplate;
 
 @Configuration
@@ -74,9 +77,12 @@ public class KafkaConfig {
   public ConcurrentMessageListenerContainer<String, String> repliesContainer(
     ConcurrentKafkaListenerContainerFactory<String, String> containerFactory
   ) {
-    
+
     ConcurrentMessageListenerContainer<String, String> repliesContainer = containerFactory
-      .createContainer("rating-query-service.rating.find-one.reply");
+      .createContainer(
+        "rating-query-service.rating.find-one.reply",
+        "rating-query-service.rating.find-all.reply"
+      );
     repliesContainer.getContainerProperties().setGroupId(groupId + "-replies");
     repliesContainer.setAutoStartup(true);
     return repliesContainer;

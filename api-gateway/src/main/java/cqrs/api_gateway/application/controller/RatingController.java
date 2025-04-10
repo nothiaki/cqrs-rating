@@ -1,5 +1,6 @@
 package cqrs.api_gateway.application.controller;
 
+import java.util.List;
 import java.util.UUID;
 
 import org.springframework.http.HttpStatus;
@@ -28,6 +29,11 @@ public class RatingController {
   public ResponseEntity<Void> create(@RequestBody Rating rating) {
     ratingUseCase.create(rating);
     return ResponseEntity.status(HttpStatus.CREATED).build();
+  }
+
+  @GetMapping
+  public ResponseEntity<List<Rating>> findRatingById() {
+    return ResponseEntity.ok(ratingUseCase.findAllRating());
   }
 
   @GetMapping("/{id}")
