@@ -1,7 +1,13 @@
 package cqrs.api_gateway.application.usecase;
 
-import java.util.List;
+import java.time.Duration;
+import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 
+import org.apache.kafka.clients.consumer.ConsumerRecord;
+import org.apache.kafka.clients.producer.ProducerRecord;
+import org.springframework.kafka.requestreply.ReplyingKafkaTemplate;
+import org.springframework.kafka.requestreply.RequestReplyFuture;
 import org.springframework.stereotype.Service;
 
 import cqrs.api_gateway.core.domain.Rating;
@@ -15,13 +21,16 @@ public class RatingUseCaseImpl implements RatingUseCase {
 
   private final ProducerUseCase producerUseCase;
   private final StringHandler<Rating> stringHandler;
+  private final ReplyingKafkaTemplate<String, String, String> replyingKafkaTemplate;
 
   public RatingUseCaseImpl(
     ProducerUseCase producerUseCase,
-    StringHandler<Rating> stringHandler
+    StringHandler<Rating> stringHandler,
+    ReplyingKafkaTemplate<String, String, String> replyingKafkaTemplate
   ) {
     this.producerUseCase = producerUseCase;
     this.stringHandler = stringHandler;
+    this.replyingKafkaTemplate = replyingKafkaTemplate;
   }
 
   @Override
@@ -32,9 +41,25 @@ public class RatingUseCaseImpl implements RatingUseCase {
   }
 
   @Override
-  public List<Rating> findRating() {
-    //send to message broker and catch the response to send for client
-    return null;
+  public Rating findRatingById(UUID id) {
+    String requestTopic = "rating-query-service.rating.find-one";
+    String replyTopic = requestTopic + ".reply";
+
+    ProducerRecord<String, String> record = new ProducerRecord<>(requestTopic, id.toString());
+
+    replyingKafkaTemplate.setDefaultReplyTimeout(Duration.ofSeconds(10));
+    replyingKafkaTemplate.setDefaultTopic(replyTopic);
+
+    RequestReplyFuture<String, String, String> future = 
+        replyingKafkaTemplate.sendAndReceive(record);
+
+    try {
+      ConsumerRecord<String, String> reply = future.get(10, TimeUnit.SECONDS);
+
+      return stringHandler.deserialize(reply.value(), Rating.class);
+    } catch (Exception e) {
+      throw new RuntimeException("Error while getting rating by id " + e);
+    }
   }
 
 }
