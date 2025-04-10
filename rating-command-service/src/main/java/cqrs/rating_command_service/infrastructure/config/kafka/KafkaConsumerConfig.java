@@ -20,7 +20,7 @@ public class KafkaConsumerConfig {
   @Value("${spring.kafka.consumer.group-id}")
   private String groupId;
 
-  @Value("{spring.kafka.consumer.auto-offset-reset}")
+  @Value("${spring.kafka.consumer.auto-offset-reset}")
   private String autoOffsetReset;
 
   @Bean
