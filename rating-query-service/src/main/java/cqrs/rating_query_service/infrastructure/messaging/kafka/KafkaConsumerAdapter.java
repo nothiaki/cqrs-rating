@@ -48,4 +48,26 @@ import cqrs.rating_query_service.core.usecase.messaging.ConsumerUseCase;
     ));
   }
 
+  @KafkaListener(
+    topics = "rating-query-service.rating.find-all",
+    groupId = "rating-query-service-group"
+  )
+  public void findAllRating(ConsumerRecord<String, String> consumerRecord) {
+    String payload = consumerUseCase.findAllRating();
+
+    Headers headers = new RecordHeaders();
+    headers.add(new RecordHeader(KafkaHeaders.CORRELATION_ID, 
+        consumerRecord.headers().lastHeader(KafkaHeaders.CORRELATION_ID).value()));
+    headers.add(new RecordHeader(KafkaHeaders.REPLY_TOPIC, 
+        consumerRecord.headers().lastHeader(KafkaHeaders.REPLY_TOPIC).value()));
+
+    kafkaTemplate.send(new ProducerRecord<>(
+        "rating-query-service.rating.find-all.reply",
+        null,
+        consumerRecord.key(),
+        payload,
+        headers
+    ));
+  }
+
  }
