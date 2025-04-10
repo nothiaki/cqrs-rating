@@ -1,0 +1,49 @@
+{
+  "info": {
+    "name": "cqrs-rating-collection",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "bruno",
+      "event": []
+    },
+    {
+      "name": "create a new rating",
+      "event": [],
+      "request": {
+        "method": "POST",
+        "header": [],
+        "url": "http://localhost:8080/rating",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"ownerId\": \"uuid\",\n  \"productId\": \"uuid\",\n  \"rate\": 5,\n  \"feedback\": \"text\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "find all ratings",
+      "event": [],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": "http://localhost:8080/rating"
+      }
+    },
+    {
+      "name": "find one rating",
+      "event": [],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": "http://localhost:8080/rating/{rating-id}"
+      }
+    }
+  ],
+  "variable": []
+}

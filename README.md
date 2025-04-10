@@ -14,7 +14,9 @@ installed, then you run `git clone https://github.com/nothiaki/cqrs-rating.git`;
 - and just run `docker compose up --build` and wait about a minute for the containers get all up
 - then run `chmod -X ./up-connectors.sh`
 
-#### DOCS
+#### Docs
+
+After install and run the project you can import the file `cqrs-rating-collection.json` in Postman to make your http requests for api-gateway
 
 api-gateway on port 8080<br>
 rating-command-service on port 8090<br>
