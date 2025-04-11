@@ -25,3 +25,11 @@ kafka running on port 9092<br>
 postgres running on port 5432<br>
 elasticsearch on port 9200<br>
 kafka connect on port 8083<br>
+
+#### License
+
+This project is under MIT License you can check it [here](LICENSE)
+
+#### Notes
+
+I was focused on create the architeture so I didn't add tests, exceptions or virifiy inputs.
